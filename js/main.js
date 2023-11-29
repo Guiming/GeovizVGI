@@ -1,3 +1,4 @@
+// try converting to numbers when loading data from .csv files with d3.csv
 function convertNumbers(row) {
   var r = {};
   for (var k in row) {
@@ -8,16 +9,7 @@ function convertNumbers(row) {
   }
   return r;
 }
-/*
-var __data;
-d3.csv("data/2020/u426782/user_query_bbox.csv", convertNumbers, function(error, data) {
-  console.log("im in here")
-  console.log(error)
-  console.log(data)
-  __data = data
-})
 
-*/
 
 // GitHub deployed version is limited to the following users (whose contribtuion patterns were exemplified in the CaGIS paper)
 const gh_uids2020 = [426782,275891];
@@ -308,9 +300,10 @@ var update = function(resetMapView, updateBarchart, updategeographyPieChart, upd
 	
   $('body').css('cursor','wait');
 
-  //year_str = (""+$("#datestart")[0].value).split("-")[0];
-  year_str = '2020';
-  userid_str = '426782'
+  year_str = (""+$("#datestart")[0].value).split("-")[0];
+  console.log(year_str)
+  //year_str = '2020';
+  //userid_str = '275891'
 	
   if(true == updateParcoords){
 		
@@ -365,10 +358,12 @@ var update = function(resetMapView, updateBarchart, updategeographyPieChart, upd
                   .attr("value", index)
                   .text(value));
             }else{
+              /*
               $('#userid')
             .append($("<option " + "style='background-color:" + colors_center[cs[index]-1] + ";'" + " disabled></option>")
                   .attr("value", index)
                   .text(value));
+                  */
             }
           }
           else if(year_str == '2019'){
@@ -378,10 +373,12 @@ var update = function(resetMapView, updateBarchart, updategeographyPieChart, upd
                     .attr("value", index)
                     .text(value));
               }else{
+                /*
                 $('#userid')
               .append($("<option " + "style='background-color:" + colors_center[cs[index]-1] + ";'" + " disabled></option>")
                     .attr("value", index)
                     .text(value));
+                    */
               }
             }
           else{
@@ -442,7 +439,9 @@ var update = function(resetMapView, updateBarchart, updategeographyPieChart, upd
 				  }
 				  
 				uid = parseInt($('#userid option:checked')[0].text)
-        //userid_str=""+uid;
+        userid_str=""+uid;
+        console.log("userid_str", userid_str)
+        
 				urec = data_parcoords.filter(function(el){return el.userid==uid})
 				ucluster = urec[0]["cluster"]
 				val = 'cluster' + ucluster

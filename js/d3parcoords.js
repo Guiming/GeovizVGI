@@ -138,6 +138,9 @@ function userid_onchange(){
 	
 	//$( "#userid" )[0].value = uid.toString();
 	
+	userid_str=""+uid;
+	console.log("userid_str", userid_str)
+
 	console.log("changed to uid", uid)
 	//console.log(userslist)
 	

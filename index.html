@@ -376,6 +376,20 @@
 		}
 	}
 
+  function configure_dateend(dt_start){
+    year = (""+dt_start.value).split('-')[0]
+    $("#dateend")[0].value = year + "-12-31";
+    $("#dateend").trigger("change"); //essential to keep this
+
+  }
+
+  function configure_datestart(dt_end){
+    year = (""+dt_end.value).split('-')[0]
+    $("#datestart")[0].value = year + "-01-01";
+    $("#dateend")[0].value = year + "-12-31";
+    
+  }
+
 </script>
 
 <div id="attripanel" class="attripanel">
@@ -429,9 +443,9 @@
   </div>
 
   <div id="query">
-    <p><label for="datestart">Timeframe:&ensp;From&ensp;</label><input id="datestart" type="date" value="2020-01-01" min="2019-01-01" max="2020-12-31" title="Query start date. Only observation and identification activities within this timeframe are included in anlaysis."> 
+    <p><label for="datestart">Timeframe:&ensp;From&ensp;</label><input id="datestart" type="date" value="2020-01-01" min="2019-01-01" max="2020-12-31" onfocusout=configure_dateend(this) title="Query start date [can only be 2019-01-01 or 2020-01-01]. Only observation and identification activities within this timeframe are included in anlaysis."> 
 	&ensp;
-	<label for="dateend">&ensp;To&ensp;</label><input id="dateend" type="date" value="2020-12-31" min="2019-01-01" max="2020-12-31" title="Query end date. Only observation and identification activities within this timeframe are included in anlaysis."></p>
+	<label for="dateend">&ensp;To&ensp;</label><input id="dateend" type="date" value="2020-12-31" min="2019-01-01" max="2020-12-31" onchange=configure_datestart(this) title="Query end date [can only be 2019-12-31 or 2020-12-31]. Only observation and identification activities within this timeframe are included in anlaysis."></p>
 
     <p class="datetemp"><label for="datestart_tmp">From: </label><input id="datestart_tmp" type="date" value="" readonly  title="Start date on selected temporal range">
 	&ensp;
@@ -453,7 +467,7 @@
 	
 	<p>
 		<label for="batchsize">Contributors: </label>
-			<select id="batchsize" title="Number of randomly selected contributors in the batch">
+			<select id="batchsize" disabled title="Number of randomly selected contributors in the batch [disabled in this GitHub deployed version]">
 			  <option value="0">0</option>
 			  <option value="10">10</option>
 			  <option value="20" selected>20</option>
@@ -466,7 +480,7 @@
 			&nbsp;randoms&nbsp;+&nbsp;
 			
 		
-		<select id="n_closest_farthest" title="Number of contributors closest/farthest to contribution cluster center (per cluster).">
+		<select id="n_closest_farthest" disabled title="Number of contributors closest/farthest to contribution cluster center (per cluster) [disabled in this GitHub deployed version].">
 		  <option value="0">0</option>
 		  <option value="1">1</option>
 		  <option value="3" selected>3</option>
@@ -482,14 +496,14 @@
 	<p>	
 		
 		<label for="cuid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;custom IDs</label>
-		<input type="text" id="cuid" name="cuid" pattern="[0-9]+((,[0-9]+)+)?" onfocusout=checkidsformat(this) title="ID(s) of specific contributor(s) to be included in the batch (e.g. 123 or 123,456) ">
+		<input type="text" id="cuid" name="cuid" pattern="[0-9]+((,[0-9]+)+)?" onfocusout=checkidsformat(this) disabled title="ID(s) of specific contributor(s) to be included in the batch (e.g. 123 or 123,456) [disabled in this GitHub deployed version].">
 	
 	
 	<input id="submit" type="button" value="Load Batch" onclick=update(false,false,false,false,false,false,true) title="Reload contributors batch. All contributors are shown on the parallel coordinates plot (contribution clusters). Temporal, spatial, thematic, and social patterns are only queried and visualized for the focal contributor.">
 	</p>
     <hr>
 	<p>
-	<label for="userid" style="font-weight:700;">Focal Contributor: </label><select id="userid" onchange="userid_onchange()" disabled title="Contributor whose contribution patterns are queried and visualized [changing to another contributor here will update queries and visualizations]. IDs are not ordered, but color-coded by contribution cluster."></select>
+	<label for="userid" style="font-weight:700;">Focal Contributor: </label><select id="userid" onchange="userid_onchange()" disabled title="Contributor whose contribution patterns are queried and visualized [changing to another contributor here will update queries and visualizations]. IDs are not ordered, but color-coded by contribution cluster [only a small number of contributors are available for exploration in this GitHub deployed version]."></select>
 	&nbsp;
 	<span id="stats" style="color:gray"><span id="fcount"></span>&nbsp;obs.&nbsp;|&nbsp;<span id="scount"></span>&nbsp;sp.</span>
 	</p>

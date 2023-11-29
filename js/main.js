@@ -577,20 +577,24 @@ var update_map_graph = function(params, resetMapView, updateBarchart, updategeog
       //vtLayer.setUrl(vtUrl)
     }
     */
-    var baseMap = {
-      "Google Terrain": basemap_gterrain,
-      "Google Streets": basemap_gstreet,
-      "Google Satellite": basemap_gsat,
-      "Google Hybrid": basemap_ghybrid,		
-      "BaseMap OSM": basemap_osm,
-      "BaseMap Carto": basemap_carto
-      };
-      var overlayMaps = {
-        "Points": featureLayer,
-        "HeatMap": heatLayer 
-      };
-      var ctrl = L.control.layers(baseMap, overlayMaps).addTo(myMap);
+    if (!vtLayerInit){
+      
+      var baseMap = {
+        "Google Terrain": basemap_gterrain,
+        "Google Streets": basemap_gstreet,
+        "Google Satellite": basemap_gsat,
+        "Google Hybrid": basemap_ghybrid,		
+        "BaseMap OSM": basemap_osm,
+        "BaseMap Carto": basemap_carto
+        };
+        var overlayMaps = {
+          "Points": featureLayer,
+          "HeatMap": heatLayer 
+        };
+        var ctrl = L.control.layers(baseMap, overlayMaps).addTo(myMap);
 
+        vtLayerInit = true;
+    }
     if(true == updateNetwork){
 		networkInit = false;
         var usernetworkDataUrl = usernetworkUrlBase + params;

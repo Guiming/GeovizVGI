@@ -226,7 +226,7 @@ const gh_uids2019 = [275891,1030528,611294,2369084,1555067,196849,769610]
           html += "<b>" + "<a target=\"_blank\" href=" + p[keys[k]] +  ">" + "View on Web" + "</b> " + "</a>" + "<br/>"
         }
         else if(keys[k] == "image_url"){
-          html += "<img " + "src=" + p[keys[k]] +  " width=40%>" + "</img>" + "<br/>"
+          /*html += "<img " + "src=" + p[keys[k]] +  " width=40%>" + "</img>" + "<br/>"*/
         }
         else{
           html += "<b>" + keys[k].replace(/_/g, " ") + ":</b> " + p[keys[k]] + "<br/>"

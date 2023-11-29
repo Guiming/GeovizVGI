@@ -1,0 +1,256 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+  html, body, #mapid {
+      height: 100%;
+      width: 100%;
+  }
+  #mapid { z-index: 1 }
+
+  #attripanel {
+    background: rgba(234, 242, 248, 0.7); /*#ffffff99;*/
+    padding: 0.1em 0.1em;
+    position: absolute;
+    left: 1000px;
+    top: 1em;
+    /*width: 300px;
+    height: 30px;*/
+    display: none;
+    z-index: 5;
+    /*margin:5px;*/
+	border-style: groove;
+  }
+
+  #controlpanel {
+    background: rgba(234, 242, 248, 0.7); /*#ffffff99;*/
+    padding: 0.9em 1.0em;
+    position: absolute;
+    left: 20px;
+    bottom: 1em;
+    /*width: 300px;
+    height: 30px;*/
+    display: table;
+    z-index: 5;
+    /*margin:5px;*/
+	border-style: groove;
+  }
+
+#controlpanelheader{
+  /*width: 300px;*/
+}
+
+  td, tr {
+    border: 1px solid gray;
+    white-space: nowrap;
+    padding: 0.3em;
+    /*line-height: 15px;*/
+  }
+
+  /*td {
+    border: 1px solid gray;
+    height: 20px;
+  }*/
+
+  #networkpanel {
+    padding: 0.9em 1.0em;
+    position: absolute;
+    left: 350px;
+    top: 1em;
+    width: 550px;
+    display:none;
+    z-index: 4;
+	border-style: groove;
+  }
+
+  #speciespanel {
+    /*background: #ffffff99;*/
+    padding: 0.9em 1.0em;
+    position: absolute;
+    left: 930px;
+    top: 8em;
+
+    width: 500px;
+    /*height: 350px;*/
+    display:none;
+    z-index: 4;
+	border-style: groove;
+  }
+
+  #geographypanel {
+    /*background: #ffffff99;*/
+    padding: 0.9em 1.0em;
+    position: absolute;
+    left: 930px;
+    top: 1em;
+    width: 500px;
+    /*height: 350px;*/
+    display:none;
+    z-index: 4;
+	border-style: groove;
+  }
+
+  #barchartpanel {
+    /*background: #ffffff99;*/
+    padding: 0.9em 1.0em;
+    position: absolute;
+    left: 400px;
+    top: 1em;
+    width: 500px;
+    /*height: 300px;*/
+    display:none;
+    z-index: 4;
+	border-style: groove;
+  }
+
+  #querypanel {
+    /*background: #ffffff99;*/
+    padding: 0.5em 0.5em;
+    position: absolute;
+    left: 3em;
+    top: 1em;
+    width: 400px;
+    z-index: 3;
+	border-style: groove;
+  }
+
+  #querypanelheader, #query, #barchartpanelheader,
+  #d3bar,#geographypanelheader, #d3pielandcover,
+  #speciespanelheader, #d3species,
+  #controlpanelheader, #control,
+  #networkpanelheader, #d3network, #d3networkctrl, #attripanelheader{
+      /*background: #ebe6d8;
+      padding: 0.5em 1.5em;
+      position: absolute;
+      left: 4em;
+      top: 1em;
+      z-index: 3;*/
+      width: 100%;
+  }
+  /*#query h3 { margin-top: 0.4em; margin-bottom: 0.4em; }*/
+
+  #userid {
+    /*font-size: 105%;*/
+	/*font-weight: 700;*/
+    padding-left: 0.2em;
+	/*float: left;*/
+	/*margin-right:0.2em;*/
+    width: 23%;
+  }
+  
+    #cuid {
+    /*font-size: 100%;*/
+    width: 28%;
+  }
+  
+  #cuid:valid {
+    color: black;
+}
+#cuid:invalid {
+    color: red;
+}
+  
+  #userslist {
+	  width: 23%;
+  }
+
+#n_closest_farthest, #batchsize {
+	width: 15%;
+}
+
+ #stats {
+	font-size: 80%;
+	float: right;
+	margin-right:0.2em;
+	vertical-align: text-bottom;
+    
+  }
+  
+  /*#query h3 { margin-top: 0.4em; margin-bottom: 0.4em; }*/
+  #barchartpanelheader,#geographypanelheader,
+  #speciespanelheader, #networkpanelheader, #attripanelheader {
+    cursor: move;
+  }
+
+  #querypanelheader, #controlpanelheader {
+    /*cursor: move;*/
+  }
+
+  #btn_query, #btn_d3bar, #btn_d3geography, #btn_d3species, #btn_d3network, #btn_attri {
+      border:solid 1px;
+      width: 20px;
+      height: 15px;
+      float:right;
+      cursor:pointer;
+      text-align: center;
+      padding-right: 0.2em;
+      padding-left: 0.2em;
+      /*margin-right:0px;*/
+
+  }
+
+  #submit{
+	  margin-right: 0.2em;
+	  /*text-align: right;*/
+	  float:right;
+	  font-weight: 700;
+  }
+
+  #btn_query_x, #btn_d3bar_x, #btn_d3geography_x,
+  #btn_d3species_x, #btn_control, #btn_d3network_x, #btn_attri_x {
+    border:solid 1px;
+    border-color: black;
+    width: 20px;
+    height: 15px;
+    float:right;
+    cursor:pointer;
+    text-align: center;
+    padding-right: 0.2em;
+    padding-left: 0.2em;
+  }
+
+  #btn_d3admin1_x {
+    border:solid 1px;
+    border-color: gray;
+    color: gray;
+    width: 20px;
+    height: 15px;
+    float:right;
+    cursor:pointer;
+    text-align: center;
+    padding-right: 0.2em;
+    padding-left: 0.2em;
+  }
+
+  #d3pieadmin1header {
+    background: rgba(234, 242, 248, 0.7);
+  }
+
+  #d3pieadmin1country {
+    display:inline;
+  }
+
+.axis, #radios_species, #radios_geography, #radios_trend, #d3networkctrl {
+  font: 12px sans-serif;
+}
+
+
+.floatingpanel {
+    background-color: #ffffff99; /*rgba(255, 255, 153, 0.2);*/ /*#ffffff99;*/
+}
+
+.datetemp {
+  display:none;
+}
+
+.datetemp, #datestart_tmp, #dateend_tmp {
+  /*color: red;*/
+}
+
+#barchartpanelfooter {
+  /*align: center;*/
+}
+
+#updateonflydiv{
+  float: right;
+}

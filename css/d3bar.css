@@ -1,0 +1,33 @@
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+.brush .extent {
+  stroke: #fff;
+  fill-opacity: .125;
+  shape-rendering: crispEdges;
+}
+
+/*
+.bars {
+  fill: black;
+}
+
+.obars {
+  fill: gray;
+}
+*/
+
+#d3barmonthobs, #d3baryearobs,
+#d3barmonthstddist, #d3baryearstddist, #d3barmonthstddist {
+  display: none;
+}
+
+#footnote {
+  font-size: 10px;
+  color: gray;
+  position: absolute;
+  left: 50px;
+}

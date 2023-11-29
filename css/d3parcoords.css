@@ -1,0 +1,42 @@
+#d3parcoordsmain, .svg_parcoords {
+	opacity: 1.0;
+	background: #ffffff99;
+}
+
+.axis_parcoords {
+	  opacity: 0.5;
+	  /*font: 10px sans-serif;*/
+	  font: 90% sans-serif;
+	}
+.axis_parcoords:hover {
+  opacity: 0.9;
+}
+
+.axis_parcoords path,
+.axis_parcoords line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+  stroke-width: 2px;
+}
+
+#div_clustercenters {
+	display: none;
+}
+
+#clusters option{
+	color: #000;
+}
+
+#userslist option{
+	color: #000;
+}
+
+#div_group_contributor {
+	font-size: 100%;
+}
+
+ #d3parcoordsmain {
+    /*background: #ffffff99;*/
+	padding: 0.5em;
+ }

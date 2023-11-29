@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>iNaturallist Data Visualization</title>
+
+  <link rel="shortcut icon" href="#">
+
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://jqueryui.com/resources/demos/style.css">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"/>
+
+   <script src="https://maps.google.com/maps/api/js?v=3&key=AIzaSyCYVjUrls2J38zEYEjQkZYn3PSUsDDJJ9U&callback=Function.prototype"></script>
+
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+  <script src="http://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+
+  <!-- Leaflet plugin for vector tiles support -->
+  <!-- <script type="text/javascript"  src="https://unpkg.com/leaflet.vectorgrid@1.3.0"></script> -->
+  <!-- <script src="https://unpkg.com/leaflet.vectorgrid@latest/dist/Leaflet.VectorGrid.bundled.js"></script> -->
+
+  <!-- NEED A CUSTOMIZED VERSION See: https://github.com/Leaflet/Leaflet/issues/6789 -->
+  <script src="js/Leaflet.VectorGrid.bundled.js"></script>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+  <!-- https://github.com/davidbau/seedrandom -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
+
+  <script src='https://unpkg.com/@turf/turf@6.3.0/turf.min.js'></script>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="js/jquery.csv.min.js"></script> <!-- https://github.com/evanplaice/jquery-csv -->>
+  <script src="js/d3cloudlib.js"></script>
+
+  
+
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/d3bar.css"/>
+    <link rel="stylesheet" href="css/d3pielandcover.css"/>
+    <link rel="stylesheet" href="css/d3piecountry.css"/>
+    <link rel="stylesheet" href="css/d3pieadmin1.css"/>
+    <link rel="stylesheet" href="css/d3piekingdom.css"/>
+  <link rel="stylesheet" href="css/d3cloudspecies.css"/>
+  <link rel="stylesheet" href="css/d3network.css"/>
+  
+  <!-- GZ April 2023-->
+  <link rel="stylesheet" href="css/d3parcoords.css"/>
+
+  <script>
+  $(document).ready(function(){
+
+    // minimize, maximize
+
+    $("#btn_attri").click(function(){
+      //console.log("clicked")
+      if($(this).html() == "-"){
+          $(this).html("+");
+      }
+      else{
+          $(this).html("-");
+      }
+      $("#attri").slideToggle();
+    });
+
+    $("#btn_query").click(function(){
+      //console.log("clicked")
+      if($(this).html() == "-"){
+          $(this).html("+");
+      }
+      else{
+          $(this).html("-");
+      }
+      $("#query").slideToggle();
+    });
+
+    $("#btn_d3bar").click(function(){
+      //console.log("clicked")
+      if($(this).html() == "-"){
+          $(this).html("+");
+      }
+      else{
+          $(this).html("-");
+      }
+      $("#d3trendcharts").slideToggle();
+    });
+
+    $("#btn_d3pie").click(function(){
+      //console.log("clicked")
+      if($(this).html() == "-"){
+          $(this).html("+");
+      }
+      else{
+          $(this).html("-");
+      }
+      $("#d3pie").slideToggle();
+    });
+
+    $("#btn_d3geography").click(function(){
+      //console.log("clicked")
+      if($(this).html() == "-"){
+          $(this).html("+");
+      }
+      else{
+          $(this).html("-");
+      }
+      $("#d3geography").slideToggle();
+    });
+
+    $("#btn_d3species").click(function(){
+      //console.log("clicked")
+      if($(this).html() == "-"){
+          $(this).html("+");
+      }
+      else{
+          $(this).html("-");
+      }
+      $("#d3species").slideToggle();
+    });
+
+    $("#btn_d3network").click(function(){
+      //console.log("clicked")
+      if($(this).html() == "-"){
+          $(this).html("+");
+      }
+      else{
+          $(this).html("-");
+      }
+      $("#d3network").slideToggle();
+    });
+
+    $("#btn_control").click(function(){
+      //console.log("clicked")
+      if($(this).html() == "-"){
+          $(this).html("+");
+      }
+      else{
+          $(this).html("-");
+      }
+      $("#control").slideToggle();
+    });
+
+
+    $("#btn_attri_x").click(function(){
+      $("#attripanel").hide();
+      $("#ctrattri").prop("checked", false);
+    });
+
+    $("#btn_query_x").click(function(){
+      $("#querypanel").hide();
+      $("#ctrquery").prop("checked", false);
+    });
+
+    $("#btn_d3bar_x").click(function(){
+      $("#barchartpanel").hide();
+      $("#ctrbar").prop("checked", false);
+    });
+
+    $("#btn_d3geography_x").click(function(){
+      $("#geographypanel").hide();
+      $("#ctrpielandcover").prop("checked", false);
+    });
+
+    $("#btn_d3admin1_x").click(function(){
+      $("#d3pieadmin1").hide();
+    });
+
+    $("#btn_d3species_x").click(function(){
+      $("#speciespanel").hide();
+      $("#ctrcloud").prop("checked", false);
+    });
+
+    $("#btn_d3network_x").click(function(){
+      $("#networkpanel").hide();
+      $("#ctrnetwork").prop("checked", false);
+    });
+
+  });
+
+  </script>
+</head>
+<body>
+<script>
+
+  function show_panel(id){
+     $('#'+id).show();
+   }
+
+  function hide_panel(id){
+    $('#'+id).hide();
+   }
+
+  function toggle(cb, id){
+    if(cb.checked){
+        show_panel(id);
+     }
+    else{
+        hide_panel(id)
+     }
+  }
+
+  function toggle_species_radio(radio){
+      var radio_ids = ["kingdom", "comname", "sciname"];
+      var div_ids = ["d3piekingdom", "d3cloudcomname", "d3cloudsciname"];
+      for(var i in radio_ids){
+        if(radio.id == radio_ids[i]){
+          $("#" + div_ids[i]).show()
+        }
+        else{
+          $("#" + div_ids[i]).hide()
+        }
+      }
+
+  }
+
+  function toggle_geography_radio(radio){
+      var radio_ids = ["landcover", "country"];
+      var div_ids = ["d3pielandcover", "d3piecountry"];
+      for(var i in radio_ids){
+        if(radio.id == radio_ids[i]){
+          $("#" + div_ids[i]).show();
+          $("#d3pieadmin1").hide();
+        }
+        else{
+          $("#" + div_ids[i]).hide();
+          $("#d3pieadmin1").hide();
+        }
+      }
+
+  }
+
+  function toggle_trend_radio(radio){
+      var radio_ids = ["day", "month", "year"];
+      var grains = ["Day", "Month", "Year"];
+      var div_ids_obs = ["d3bardayobs", "d3barmonthobs", "d3baryearobs"];
+      var div_ids_stddist = ["d3bardaystddist", "d3barmonthstddist", "d3baryearstddist"];
+      var div_ids_ids = ["d3bardayids", "d3barmonthids", "d3baryearids"];
+
+      for(var i in radio_ids){
+        if(radio.id == radio_ids[i]){
+          temporalgrain = grains[i];
+          if(target == "Submission"){
+            $("#" + div_ids_obs[i]).show();
+            $("#" + div_ids_stddist[i]).hide();
+            $("#" + div_ids_ids[i]).hide();
+          }else if(target == "StdDistance"){
+            $("#" + div_ids_stddist[i]).show();
+            $("#" + div_ids_obs[i]).hide();
+            $("#" + div_ids_ids[i]).hide();
+          }else{
+            $("#" + div_ids_stddist[i]).hide();
+            $("#" + div_ids_obs[i]).hide();
+            $("#" + div_ids_ids[i]).show();
+          }
+        }
+        else{ //target == "IDs"
+          $("#" + div_ids_obs[i]).hide();
+          $("#" + div_ids_stddist[i]).hide();
+          $("#" + div_ids_ids[i]).hide();
+        }
+      }
+
+  }
+
+  function toggle_target_radio(radio){
+      var radio_ids = ["submission", "std_distance", "ids"];
+
+      var grains = ["Day", "Month", "Year"];
+      var div_ids_obs = ["d3bardayobs", "d3barmonthobs", "d3baryearobs"];
+      var div_ids_stddist = ["d3bardaystddist", "d3barmonthstddist", "d3baryearstddist"];
+      var div_ids_ids = ["d3bardayids", "d3barmonthids", "d3baryearids"];
+
+      if(radio.id == radio_ids[0]){
+        target = "Submission";
+        $("#footnote").show();
+        for(var i in grains){
+
+          $("#" + div_ids_stddist[i]).hide();
+          $("#" + div_ids_ids[i]).hide();
+
+          if(temporalgrain == grains[i]){
+            $("#" + div_ids_obs[i]).show();
+          }else{
+            $("#" + div_ids_obs[i]).hide();
+          }
+        }
+      }
+      else if(radio.id == radio_ids[1]){
+        target = "StdDistance";
+        $("#footnote").hide();
+        for(var i in grains){
+
+          $("#" + div_ids_obs[i]).hide();
+          $("#" + div_ids_ids[i]).hide();
+
+          if(temporalgrain == grains[i]){
+            $("#" + div_ids_stddist[i]).show();
+          }else{
+            $("#" + div_ids_stddist[i]).hide();
+          }
+        }
+      }
+      else{ //radio.id == radio_ids[2]
+        target = "IDs";
+        $("#footnote").hide();
+        for(var i in grains){
+
+          $("#" + div_ids_obs[i]).hide();
+          $("#" + div_ids_stddist[i]).hide();
+
+          if(temporalgrain == grains[i]){
+            $("#" + div_ids_ids[i]).show();
+          }else{
+            $("#" + div_ids_ids[i]).hide();
+          }
+        }
+      }
+    }
+
+    function toggle_updateonfly(cb){
+      if(cb.checked){
+        updateonfly = true;
+      }else{
+        updateonfly = false;
+      }
+      //console.log(updateonfly);
+    }
+
+    function toggle_nodelabelcb(cb){
+      if(cb.checked){
+        d3.selectAll(".nodelabel").style("display", "block");
+      }else{
+        d3.selectAll(".nodelabel").style("display", "none");
+      }
+    }
+	
+	function toggle_showclustercb(cb){
+      if(cb.checked){
+        $("#div_clustercenters").show();
+      }else{
+        $("#div_clustercenters").hide();
+      }
+    }
+	
+	function toggle_patternchangerd(cb){
+        var radios = document.getElementsByName('rd_pattern_change');
+		for (var i = 0, r=radios, l=r.length; i < l;  i++){
+		if(cb.checked){
+			r[i].disabled = false;
+		}else{
+			r[i].disabled = true;
+			
+		}
+      }
+	  
+	  if(cb.checked){
+		$("#n_closest_farthest").attr("disabled","disabled");
+		//$("#cuid").attr("disabled","disabled");
+      }else{
+	    $("#n_closest_farthest").removeAttr("disabled");
+		//$("#cuid").removeAttr("disabled");
+	  }
+		
+    }
+	
+	function checkidsformat(ipt){
+		if (!(/[0-9]+((,[0-9]+)+)?/.test(ipt.value))){
+			ipt.value = "";
+		}
+	}
+
+</script>
+
+<div id="attripanel" class="attripanel">
+<div id="attripanelheader">
+  <b>iNaturalist User Contributions</b><div id="btn_attri_x">x</div><div id="btn_attri">-</div>
+</div>
+<div id="attri">
+  <p>Dr. Guiming Zhang (guiming.zhang@du.edu)</p><p>Department of Geography & the Environment</p>
+</div>
+</div>
+
+  <div id="controlpanel" class="controlpanel">
+  <div id="controlpanelheader">
+    <b>Control Panel</b><div id="btn_control">-</div>
+  </div>
+  <div id="control">
+      <table>
+          <tr>
+              <td>
+                  <label for="ctrquery">Query </label><input id="ctrquery" type="checkbox" checked onchange=toggle(this,'querypanel') title="Show/Hide Contributor Query Panel.">
+              </td>
+
+              <td>
+                  <label for="ctrbar">Temproal </label><input id="ctrbar" type="checkbox" unchecked disabled onchange=toggle(this,'barchartpanel') title="Show/Hide Temporal Trend Visualization Panel.">
+              </td>
+
+              <td>
+                  <label for="ctrpielandcover">Spatial </label><input id="ctrpielandcover" type="checkbox" unchecked disabled onchange=toggle(this,'geographypanel') title="Show/Hide Geographic Distribution Visualization Panel.">
+              </td>
+
+              <td>
+                  <label for="ctrcloud">Thematic </label><input id="ctrcloud" type="checkbox" unchecked disabled onchange=toggle(this,'speciespanel') title="Show/Hide Species Composition Visualization Panel.">
+              </td>
+
+              <td>
+                  <label for="ctrnetwork">Social </label><input id="ctrnetwork" type="checkbox" unchecked disabled onchange=toggle(this,'networkpanel') title="Show/Hide Social Network Visualization Panel.">
+              </td>
+
+              <td>
+                  <label for="ctrattri">Attribution </label><input id="ctrattri" type="checkbox" unchecked onchange=toggle(this,'attripanel') title="Show/Hide Attribution Panel.">
+              </td>
+
+          </tr>
+      </table>
+    </div>
+</div>
+
+  <div id="querypanel" class="floatingpanel">
+  <div id="querypanelheader">
+    <b>Contributor Query Panel</b><div id="btn_query_x">x</div><div id="btn_query">-</div>
+  </div>
+
+  <div id="query">
+    <p><label for="datestart">Timeframe:&ensp;From&ensp;</label><input id="datestart" type="date" value="2020-01-01" min="2019-01-01" max="2020-12-31" title="Query start date. Only observation and identification activities within this timeframe are included in anlaysis."> 
+	&ensp;
+	<label for="dateend">&ensp;To&ensp;</label><input id="dateend" type="date" value="2020-12-31" min="2019-01-01" max="2020-12-31" title="Query end date. Only observation and identification activities within this timeframe are included in anlaysis."></p>
+
+    <p class="datetemp"><label for="datestart_tmp">From: </label><input id="datestart_tmp" type="date" value="" readonly  title="Start date on selected temporal range">
+	&ensp;
+	<label for="dateend_tmp">To: </label><input id="dateend_tmp" type="date" value="" readonly  title="End date on selected temporal range"></p>   	
+
+    <p style="display:none"><label for="obscured">Coordinates Obscured: Include </label><input id="obscured" type="checkbox" checked>&ensp;<label for="captivecultivated">Captive/Cultivated: Include </label><input id="captivecultivated" type="checkbox" checked></p>
+	
+	<span>
+	<label for="changeonlycb">Contribution Change Direction</label>&nbsp;<input id="changeonlycb" type="checkbox" unchecked disabled onchange=toggle_patternchangerd(this) title="Query by contribution change direction from 2019 to 2020 [disabled in this GitHub deployed version]">:
+	&nbsp;
+	<label for="patter_increased" style='font-size:20px;'>&#8599;</label>
+	<input type="radio" id="patter_increased" name="rd_pattern_change" checked value="increased" disabled title="Contribution increased in 2020">
+	&nbsp;<label for="patter_same" style='font-size:20px;'>&#8594;</label>
+	<input type="radio" id="patter_same" name="rd_pattern_change" value="same" disabled title="Contribution stayed the same in 2020">
+	&nbsp;<label for="patter_decreased" style='font-size:20px;'>&#8600;</label>
+	<input type="radio" id="patter_decreased" name="rd_pattern_change" value="decreased" disabled title="Contribution decreased in 2020">
+	
+	</span>
+	
+	<p>
+		<label for="batchsize">Contributors: </label>
+			<select id="batchsize" title="Number of randomly selected contributors in the batch">
+			  <option value="0">0</option>
+			  <option value="10">10</option>
+			  <option value="20" selected>20</option>
+			  <option value="50">50</option>
+			  <option value="100">100</option>
+			  <option value="200">200</option>
+			  <option value="500">500</option>
+			  <option value="1000">1000</option>
+			</select>					
+			&nbsp;randoms&nbsp;+&nbsp;
+			
+		
+		<select id="n_closest_farthest" title="Number of contributors closest/farthest to contribution cluster center (per cluster).">
+		  <option value="0">0</option>
+		  <option value="1">1</option>
+		  <option value="3" selected>3</option>
+		  <option value="5">5</option>
+		  <option value="10">10</option>
+		  <option value="20">20</option>
+		  <option value="50">50</option>
+		  <option value="100">100</option>
+		</select>
+		<label for="n_closest_farthest">&nbsp;(a)typicals</label>
+	</p>
+	
+	<p>	
+		
+		<label for="cuid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;custom IDs</label>
+		<input type="text" id="cuid" name="cuid" pattern="[0-9]+((,[0-9]+)+)?" onfocusout=checkidsformat(this) title="ID(s) of specific contributor(s) to be included in the batch (e.g. 123 or 123,456) ">
+	
+	
+	<input id="submit" type="button" value="Load Batch" onclick=update(false,false,false,false,false,false,true) title="Reload contributors batch. All contributors are shown on the parallel coordinates plot (contribution clusters). Temporal, spatial, thematic, and social patterns are only queried and visualized for the focal contributor.">
+	</p>
+    <hr>
+	<p>
+	<label for="userid" style="font-weight:700;">Focal Contributor: </label><select id="userid" onchange="userid_onchange()" disabled title="Contributor whose contribution patterns are queried and visualized [changing to another contributor here will update queries and visualizations]. IDs are not ordered, but color-coded by contribution cluster."></select>
+	&nbsp;
+	<span id="stats" style="color:gray"><span id="fcount"></span>&nbsp;obs.&nbsp;|&nbsp;<span id="scount"></span>&nbsp;sp.</span>
+	</p>
+	
+	<!-- GZ April 2023: START-->
+	<p><label for="showclustercb">Show Contribution Clusters</label><span style="color:gray">&nbsp;(center in dashed line)</span>&nbsp;<input id="showclustercb" type="checkbox" unchecked disabled onchange=toggle_showclustercb(this) title="Show/Hide parallel coordinates plot of cluster centers (in dashed lines) and individual contributors (in solid lines). A line on the parallel coordinates plot, corresponding to a contribution cluster center (dashed line) or a specific contributor (solid line) is drawn based on values of the six features reflecting contribution characteristics: number of species observations, number of active months, standard distance of observation locations, number of species taxonomic kingdoms, number of land cover types across observation locations, and number of interacting contributors.">
+	 </p>
+	<div id='div_clustercenters'>	
+		
+		<div  id="div_group_contributor" style="color:black">
+		<label for="clusters">Cluster:</label>
+		<select id="clusters" onchange="cluster_onchange()" disabled title="Contribution pattern cluster and number of contributors in each cluster [color-coded by cluster].">
+		  <option value="cluster1">Cluster 1</option>
+		  <option value="cluster2" selected>Cluster 2</option>
+		  <option value="cluster3">Cluster 3</option>
+		  <option value="cluster4">Cluster 4</option>
+		</select>
+		
+		<label for="userslist">Contributor:</label>
+		<select id="userslist" onchange="userslist_onchange()" disabled title="The contributor to be highlighted on parallel coordinates plot (in bold solid line). IDs are ordered and color-coded on ascending distance from cluster center. Changing to another contributor here will NOT update queries and temporal, spatial, thematic, and social visualizations. ">
+		</select>
+		</div>
+		
+		<div id='d3parcoordsmain'></div>	
+		
+	</div>	
+	<!-- GZ April 2023: END-->
+
+    
+  </div>
+
+<!--
+  <div id="query">
+    <p><label for="datestart">Date Start: </label><input id="datestart" type="date" value="2018-01-01" onchange=update(true,true,true,true,true,false)></p>
+    <p><label for="dateend">Date End: </label><input id="dateend" type="date" value="2018-05-31" onchange=update(true,true,true,true,true,false)></p>
+
+    <p class="datetemp"><label for="datestart_tmp">Date Start: </label><input id="datestart_tmp" type="date" value="" readonly onchange=update(true,false,true,true,true,true) ></p>
+    <p class="datetemp"><label for="dateend_tmp">Date End: </label><input id="dateend_tmp" type="date" value="" readonly onchange=update(true,false,true,true,true,true)></p>
+
+
+    <p><label for="obscured">Coordinates Obscured: Include </label><input id="obscured" type="checkbox" checked onchange=update(false,true,true,true,true,false)></p>
+    <p><label for="captivecultivated">Captive/Cultivated: Include </label><input id="captivecultivated" type="checkbox" checked onchange=update(true,true,true,true,true,false)></p>
+    <p><label for="userid">User ID: </label><input id="userid" value="477"></p>
+    <p><input id="submit" type="button" value="Manual Update" onclick=update(true,true,true,true,true,false)></p>
+    <p>Observations: <span id="fcount"></span> / <span id="ftcount"></span></p>
+    <p>Species: <span id="scount"></span> / <span id="stcount"></span></p>
+  </div> -->
+
+</div>
+
+
+  <div id="barchartpanel" class="floatingpanel">
+
+    <div id="barchartpanelheader">
+      <b>Temproal Trend</b><div id="btn_d3bar_x">x</div><div id="btn_d3bar">-</div>
+    </div>
+    <div id="d3trendcharts">
+
+      <div id="radios_trend">
+        Variable:
+        <input type="radio" id="submission" name="target" checked onclick="toggle_target_radio(this)">
+        <label for="target">Observations</label>
+        <input type="radio" id="std_distance" name="target" onclick="toggle_target_radio(this)">
+        <label for="target">Std Distance  </label>
+        <input type="radio" id="ids" name="target" onclick="toggle_target_radio(this)">
+        <label for="target">Identifications </label>
+        <br>
+        Temporal grain:
+        <input type="radio" id="day" name="trend" checked onclick="toggle_trend_radio(this)">
+        <label for="trend">Day</label>
+        <input type="radio" id="month" name="trend" onclick="toggle_trend_radio(this)">
+        <label for="trend">Month</label>
+        <input type="radio" id="year" name="trend" onclick="toggle_trend_radio(this)">
+        <label for="trend">Year </label>
+
+        <div id="updateonflydiv">
+          <input type="checkbox" id="updateonfly" name="updateonfly" unchecked onclick="toggle_updateonfly(this)" disabled title="Update visualizations on-the-fly based on selected time windows [disabled in this GitHub deployed version]">
+          <label for="trend">Update on the fly</label>
+        </div>
+      </div>
+
+      <div id="d3bardayobs" class="d3bardayobs"></div>
+      <div id="d3barmonthobs" class="d3barmonthobs"></div>
+      <div id="d3baryearobs" class="d3baryearobs"></div>
+
+      <div id="d3bardaystddist" class="d3bardaystddist"></div>
+      <div id="d3barmonthstddist" class="d3barmonthstddist"></div>
+      <div id="d3baryearstddist" class="d3baryearstddist"></div>
+
+      <div id="d3bardayids" class="d3bardayids"></div>
+      <div id="d3barmonthids" class="d3barmonthids"></div>
+      <div id="d3baryearids" class="d3baryearids"></div>
+
+      <div id="footnote"><b>Gray</b>: coordinates obscured</div>
+  </div>
+  </div>
+
+  <div id="geographypanel" class="floatingpanel">
+
+    <div id="geographypanelheader">
+      <b>Geographic Distribution</b><div id="btn_d3geography_x">x</div><div id="btn_d3geography">-</div>
+    </div>
+    <div id="d3geography" class="d3geography">
+        <div id="radios_geography">
+          <input type="radio" id="landcover" name="geography" checked onclick="toggle_geography_radio(this)">
+          <label for="geography">Landcover</label>
+          <input type="radio" id="country" name="geography" onclick="toggle_geography_radio(this)">
+          <label for="geography">Country</label>
+        </div>
+
+        <!--<div id="d3pielandcover" class="d3pielandcover"></div> -->
+        <div id="d3pielandcover"></div>
+        <div id="d3piecountry"></div>
+        <div id="d3pieadmin1">
+          <div id="d3pieadmin1header">
+            <div id="d3pieadmin1country"></div><div id="btn_d3admin1_x">x</div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div id="speciespanel" class="floatingpanel">
+
+    <div id="speciespanelheader">
+      <b>Species Composition</b><div id="btn_d3species_x">x</div><div id="btn_d3species">-</div>
+    </div>
+
+    <div id="d3species" class="d3species">
+      <div id="radios_species">
+        <input type="radio" id="kingdom" name="species" checked onclick="toggle_species_radio(this)">
+        <label for="species">Kingdom</label>
+        <input type="radio" id="comname" name="species" onclick="toggle_species_radio(this)">
+        <label for="species">Common name</label>
+        <input type="radio" id="sciname" name="species" onclick="toggle_species_radio(this)">
+        <label for="species">Scientific name</label>
+      </div>
+
+      <div id="d3piekingdom"></div>
+      <div id="d3cloudcomname"></div>
+      <div id="d3cloudsciname"></div>
+
+    </div>
+
+  </div>
+
+  <div id='networkpanel' class="floatingpanel">
+
+    <div id="networkpanelheader">
+      <b>Social Network</b><div id="btn_d3network_x">x</div><div id="btn_d3network">-</div>
+    </div>
+
+    <div id="d3network"  class="d3network">
+      <div id="d3networkctrl">
+        <label for="threshold" id="thresholdlabel">Link weight &ge; </label>
+        <input type="number" id="thresholdinput" value="2", min="1" max="100">
+
+        <label id="thresholdmin">1</label>
+        <input type="range" min="1" max="100" value="2" class="slider" id="thresholdslider">
+        <label id="thresholdmax">100</label>
+
+        <div id="nodecbdiv">
+
+          <input id="focinodecb" type="checkbox" checked onchange=toggle_focinodecb(this)>
+          <label for="focinodecb">Links with foci node only</label> |
+
+          <input id="nodevisibilitycb" type="checkbox" checked onchange=toggle_nodevisibilitycb(this)>
+          <label for="nodevisibilitycb">No dangling nodes </label> |
+
+          <input id="nodelabelcb" type="checkbox" unchecked onchange=toggle_nodelabelcb(this)>
+          <label id="nodelabelcblabel" for="nodelabelcb">Node name </label>
+        </div>
+      </div>
+      <p></p>
+      <div id="d3networkmain"></div>
+  </div>
+</div>
+
+
+<div id="mapid"></div>
+    <script src="js/d3barday.js"></script>
+    <script src="js/d3barmonth.js"></script>
+    <script src="js/d3baryear.js"></script>
+    <script src="js/d3piekingdom.js"></script>
+    <script src="js/d3pielandcover.js"></script>
+    <script src="js/d3pieadmin1.js"></script>
+    <script src="js/d3piecountry.js"></script>
+    <script src="js/d3cloudspecies.js"></script>
+    <script src="js/d3network.js"></script>
+	  <script src="js/d3parcoords.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/dragdiv.js"></script>
+
+    <script>
+
+        $("#ctrbar").prop("checked", false);
+        $("#ctrpielandcover").prop("checked", false);
+        $("#ctrcloud").prop("checked", false);
+
+
+        var slider = document.getElementById("thresholdslider");
+        var input = document.getElementById("thresholdinput");
+        input.value = slider.value;
+
+        slider.oninput = function() {
+          input.value = slider.value;
+        }
+
+        slider.onchange = function() {
+          EDGE_WEIGHT_THRESHOD = slider.value;
+          draw_network(data_network, true);
+        }
+
+        input.onchange = function() {
+          EDGE_WEIGHT_THRESHOD = input.value;
+          slider.value = input.value;
+          draw_network(data_network, true);
+        }
+
+        function toggle_nodevisibilitycb(cb){
+          if(cb.checked){
+            LINKED_NODES_ONLY = true;
+            draw_network(data_network, true);
+          }else{
+            LINKED_NODES_ONLY = false;
+            draw_network(data_network, true);
+          }
+        }
+
+        function toggle_focinodecb(cb){
+          if(cb.checked){
+            LINKED_WITH_FOCI_NODE_ONLY = true;
+            draw_network(data_network, true);
+          }else{
+            LINKED_WITH_FOCI_NODE_ONLY = false;
+            draw_network(data_network, true);
+          }
+        }
+
+    </script>
+
+</body>
+</html>
+
+<!--https://www.cybertec-postgresql.com/en/machine-learning-in-postgresql-part-1-kmeans-clustering/--!>

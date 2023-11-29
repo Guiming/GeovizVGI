@@ -1,4 +1,4 @@
-# Geovisualization for Exploring VGI Participation Patterns
+# Geovisualization Framework for Exploring VGI Participation Patterns
 A web-based geovisualization framework for exploratory analysis of individual VGI contributor’s participation characteristics
 
 ## Author

@@ -516,7 +516,7 @@ var update_parcoords = function(updateParcoords){
 }
 */
 var update_map_graph = function(params, resetMapView, updateBarchart, updategeographyPieChart, updateCloud, updateNetwork) {
-	
+    /* no vector tiles in the github deployed version
     // vector tiles
     var vtUrl = vtUrlBase + params
   	//console.log("Reading tiles from " + vtUrl);
@@ -550,8 +550,9 @@ var update_map_graph = function(params, resetMapView, updateBarchart, updategeog
             .openOn(myMap);
     		    L.DomEvent.stop(e);
     	});
-		
-			///*
+
+
+		///*
 		var baseMap = {
 		"Google Terrain": basemap_gterrain,
 		"Google Streets": basemap_gstreet,
@@ -562,7 +563,7 @@ var update_map_graph = function(params, resetMapView, updateBarchart, updategeog
 		};
 		var overlayMaps = {
 			"Points": featureLayer,
-			"HeatMap": heatLayer,
+			"HeatMap": heatLayer ,
 			"Points(VTile)": vtLayer
 		};
 		var ctrl = L.control.layers(baseMap, overlayMaps).addTo(myMap);
@@ -570,11 +571,25 @@ var update_map_graph = function(params, resetMapView, updateBarchart, updategeog
 		//ctrl.layers(baseMap).addTo(myMap);
 		//ctrl.
 	
-      vtLayerInit = true;
+      //vtLayerInit = true;
     }
     else{
-      vtLayer.setUrl(vtUrl)
+      //vtLayer.setUrl(vtUrl)
     }
+    */
+    var baseMap = {
+      "Google Terrain": basemap_gterrain,
+      "Google Streets": basemap_gstreet,
+      "Google Satellite": basemap_gsat,
+      "Google Hybrid": basemap_ghybrid,		
+      "BaseMap OSM": basemap_osm,
+      "BaseMap Carto": basemap_carto
+      };
+      var overlayMaps = {
+        "Points": featureLayer,
+        "HeatMap": heatLayer 
+      };
+      var ctrl = L.control.layers(baseMap, overlayMaps).addTo(myMap);
 
     if(true == updateNetwork){
 		networkInit = false;
@@ -1193,10 +1208,11 @@ var update_map_graph = function(params, resetMapView, updateBarchart, updategeog
 				if(myMap.hasLayer(heatLayer)){
 					heatLayer.setLatLngs(data.map(p => [p['lat'], p['lon']]));
 				}
-
+        /*
 				if(myMap.hasLayer(vtLayer)){
 					myMap.removeLayer(vtLayer);
-				}
+				}*/
+
         //*/
 
 			//}

@@ -193,7 +193,7 @@ function path(d) {
 }
 
 var attrs = ['n_interacted_users', 'n_landcovers', 'n_kingdoms', 'std_dist_km', 'n_month_active', 'n_observations']
-var labels = ["Interacted Contributors", "Landcover Types", "Species Kingdoms", "Standard Distance (km)","Months Active",  "Species Observations"]
+var labels = ["Interacting Contributors", "Landcover Types", "Species Kingdoms", "Standard Distance (km)","Months Active",  "Species Observations"]
  
  // Color scale: give me a specie name, I return a color
  var color = d3.scale.ordinal()

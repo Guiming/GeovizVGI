@@ -29,9 +29,9 @@ var color_landcover = d3.scale.ordinal()
                               "Barren",
                               "Water bodies",
                               "Unclassified"])
-                    .range(['#05450a', '#086a10', '#54a708', '#78d203', '#009900', '#c6b044', '#dcd159',
-                            '#dade48', '#fbff13', '#b6ff05', '#27ff87', '#c24f44', '#a5a5a5', '#ff6d4c',
-                            '#69fff8', '#f9ffa4', '#1c0dff', '#000000']);
+                    .range(['#218a21', '#31cc31', '#98cc31', '#96fa96', '#8dba8d', '#baba8d', '#f5deb3',
+                            '#daeb9d', '#ffd500', '#f0b967', '#4783b5', '#faef73', '#ff0000', '#999356',
+                            '#ffffff', '#bfbfbd', '#86cae3', '#646464']);
 // more color scales: https://bl.ocks.org/pstuffa/3393ff2711a53975040077b7453781a9
 
 var svg_pie_landcover;

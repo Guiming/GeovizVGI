@@ -21,27 +21,6 @@ const gh_uids2019 = [275891,1030528,611294,2369084,1555067,196849,769610]
   var zoomLevelThreshold = 15
   var myMap = L.map('mapid').setView(center, zoomLevel);
 
-  var basemap_gterrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
-      maxZoom: 20,
-      subdomains:['mt0','mt1','mt2','mt3']
-  }).addTo(myMap);
-
-  var basemap_gstreet = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
-      maxZoom: 20,
-      subdomains:['mt0','mt1','mt2','mt3']
-  }).addTo(myMap);
-
-  var basemap_gsat = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
-      maxZoom: 20,
-      subdomains:['mt0','mt1','mt2','mt3']
-  }).addTo(myMap);
-
-  var basemap_ghybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{
-      maxZoom: 20,
-      subdomains:['mt0','mt1','mt2','mt3']
-  }).addTo(myMap);
-
-
   var basemap_osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
         maxZoom: 20,
         attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'

@@ -20,6 +20,49 @@ const gh_uids2019 = [275891,1030528,611294,2369084,1555067,196849,769610]
   var center = [43.1147469,-95.5102336]//[39.737, -104.959];
   var zoomLevelThreshold = 15
   var myMap = L.map('mapid').setView(center, zoomLevel);
+// landcover maps
+     // https://nasa-gibs.github.io/gibs-api-docs/available-visualizations/#visualization-product-catalog
+     var template =
+      '//gibs-{s}.earthdata.nasa.gov/wmts/epsg3857/best/' +
+      '{layer}/default/{time}/{tileMatrixSet}/{z}/{y}/{x}.png';
+    
+     landcovermap2001 = L.tileLayer(template, {
+      //layer: 'MODIS_Terra_CorrectedReflectance_TrueColor',
+      layer: 'MODIS_Combined_L3_IGBP_Land_Cover_Type_Annual',
+      tileMatrixSet: 'GoogleMapsCompatible_Level8', // only works at level8
+      maxZoom: 8,
+      time: '2001-06-01',
+      tileSize: 256,
+      subdomains: 'abc',
+      noWrap: false,
+      continuousWorld: true,
+
+      attribution:
+        '<a href="https://wiki.earthdata.nasa.gov/display/GIBS" target="_blank">' +
+        'NASA EOSDIS GIBS</a>'
+    }); //.addTo(myMap);
+    
+    landcovermap2018 = L.tileLayer(template, {
+      //layer: 'MODIS_Terra_CorrectedReflectance_TrueColor',
+      layer: 'MODIS_Combined_L3_IGBP_Land_Cover_Type_Annual',
+      tileMatrixSet: 'GoogleMapsCompatible_Level8', // only works at level8
+      maxZoom: 8,
+      time: '2018-06-01',
+      tileSize: 256,
+      subdomains: 'abc',
+      noWrap: false,
+      continuousWorld: true,
+
+      attribution:
+        '<a href="https://wiki.earthdata.nasa.gov/display/GIBS" target="_blank">' +
+        'NASA EOSDIS GIBS</a>'
+    }); //.addTo(myMap);
+   
+    // BASE MAP
+    var basemap_opentopo = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",{
+      maxZoom: 20,
+      attribution: '&copy; <a href="https://opentopomap.org/" target="_blank">OpenTopoMap</a>'
+    }).addTo(myMap);
 
   var basemap_osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
         maxZoom: 20,
@@ -31,6 +74,10 @@ const gh_uids2019 = [275891,1030528,611294,2369084,1555067,196849,769610]
     id: 'voyager'
   }).addTo(myMap);
 
+    var basemap_dark = L.tileLayer('https://cartodb-basemaps-d.global.ssl.fastly.net/dark_all/{z}/{x}/{y}@2x.png', {
+      maxZoom: 20,
+      id: 'darkmatter'
+    }).addTo(myMap);
 
   //basemap.addTo(myMap);
 
@@ -531,15 +578,15 @@ var update_map_graph = function(params, resetMapView, updateBarchart, updategeog
 
 
 		///*
-		var baseMap = {
-		"Google Terrain": basemap_gterrain,
-		"Google Streets": basemap_gstreet,
-		"Google Satellite": basemap_gsat,
-		"Google Hybrid": basemap_ghybrid,		
+		var baseMap = {	
 		"BaseMap OSM": basemap_osm,
-		"BaseMap Carto": basemap_carto
+		"BaseMap Carto": basemap_carto,
+	        "BaseMap Dark": basemap_dark,
+	        "BaseMap Topo": basemap_opentopo
 		};
 		var overlayMaps = {
+  			"Landcover 2018": landcovermap2018,
+          		"Landcover 2001": landcovermap2001,
 			"Points": featureLayer,
 			"HeatMap": heatLayer ,
 			"Points(VTile)": vtLayer
@@ -557,15 +604,15 @@ var update_map_graph = function(params, resetMapView, updateBarchart, updategeog
     */
     if (!vtLayerInit){
       
-      var baseMap = {
-        "Google Terrain": basemap_gterrain,
-        "Google Streets": basemap_gstreet,
-        "Google Satellite": basemap_gsat,
-        "Google Hybrid": basemap_ghybrid,		
+      var baseMap = {	
         "BaseMap OSM": basemap_osm,
-        "BaseMap Carto": basemap_carto
+        "BaseMap Carto": basemap_carto,
+	"BaseMap Dark": basemap_dark,
+        "BaseMap Topo": basemap_opentopo
         };
         var overlayMaps = {
+	  "Landcover 2018": landcovermap2018,
+          "Landcover 2001": landcovermap2001,
           "Points": featureLayer,
           "HeatMap": heatLayer 
         };
@@ -1254,26 +1301,6 @@ var update_map_graph = function(params, resetMapView, updateBarchart, updategeog
 
     //update(true, true, true, true, true, tmpMode, true);
 	update(false, false, false, false, false, tmpMode, true);
-
-	/* moved into update_map_graph()
-	var baseMap = {
-    "Google Terrain": basemap_gterrain,
-    "Google Streets": basemap_gstreet,
-    "Google Satellite": basemap_gsat,
-    "Google Hybrid": basemap_ghybrid,
-    "BaseMap Carto": basemap_carto,
-    "BaseMap OSM": basemap_osm
-	};
-	var overlayMaps = {
-		"Features": featureLayer,
-		"HeatMap": heatLayer,
-		"VectorTiles": vtLayer
-	};
-	var ctrl = L.control.layers(baseMap, overlayMaps).addTo(myMap);
-	//ctrl.removeFrom(myMap);
-	//ctrl.layers(baseMap).addTo(myMap);
-	//ctrl.
-	*/
 
 	myMap.on('moveend', function() {
 		//console.log("moveend");

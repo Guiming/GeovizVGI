@@ -59,10 +59,7 @@ const gh_uids2019 = [275891,1030528,611294,2369084,1555067,196849,769610]
     }); //.addTo(myMap);
    
     // BASE MAP
-    var basemap_opentopo = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",{
-      maxZoom: 20,
-      attribution: '&copy; <a href="https://opentopomap.org/" target="_blank">OpenTopoMap</a>'
-    }).addTo(myMap);
+
 
   var basemap_osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
         maxZoom: 20,
@@ -77,6 +74,11 @@ const gh_uids2019 = [275891,1030528,611294,2369084,1555067,196849,769610]
     var basemap_dark = L.tileLayer('https://cartodb-basemaps-d.global.ssl.fastly.net/dark_all/{z}/{x}/{y}@2x.png', {
       maxZoom: 20,
       id: 'darkmatter'
+    }).addTo(myMap);
+
+    var basemap_opentopo = L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",{
+      maxZoom: 20,
+      attribution: '&copy; <a href="https://opentopomap.org/" target="_blank">OpenTopoMap</a>'
     }).addTo(myMap);
 
   //basemap.addTo(myMap);

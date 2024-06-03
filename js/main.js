@@ -607,10 +607,11 @@ var update_map_graph = function(params, resetMapView, updateBarchart, updategeog
     if (!vtLayerInit){
       
       var baseMap = {	
+	"BaseMap Topo": basemap_opentopo,
         "BaseMap OSM": basemap_osm,
         "BaseMap Carto": basemap_carto,
-	"BaseMap Dark": basemap_dark,
-        "BaseMap Topo": basemap_opentopo
+	"BaseMap Dark": basemap_dark
+        
         };
         var overlayMaps = {
 	  "Landcover 2018": landcovermap2018,

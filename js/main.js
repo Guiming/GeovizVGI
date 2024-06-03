@@ -608,9 +608,10 @@ var update_map_graph = function(params, resetMapView, updateBarchart, updategeog
       
       var baseMap = {	
 	"BaseMap Topo": basemap_opentopo,
+	"BaseMap Dark": basemap_dark,
         "BaseMap OSM": basemap_osm,
-        "BaseMap Carto": basemap_carto,
-	"BaseMap Dark": basemap_dark
+        "BaseMap Carto": basemap_carto
+	
         
         };
         var overlayMaps = {

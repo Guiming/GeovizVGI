@@ -578,11 +578,11 @@ var update_map_graph = function(params, resetMapView, updateBarchart, updategeog
 
 
 		///*
-		var baseMap = {	
-		"BaseMap OSM": basemap_osm,
-		"BaseMap Carto": basemap_carto,
+		var baseMap = {			
+		"BaseMap Topo": basemap_opentopo,
 	        "BaseMap Dark": basemap_dark,
-	        "BaseMap Topo": basemap_opentopo
+	 	"BaseMap OSM": basemap_osm,
+   		"BaseMap Carto": basemap_carto	        
 		};
 		var overlayMaps = {
   			"Landcover 2018": landcovermap2018,
